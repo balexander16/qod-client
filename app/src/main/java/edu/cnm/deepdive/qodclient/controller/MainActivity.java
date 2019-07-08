@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
@@ -45,9 +47,15 @@ public class MainActivity extends AppCompatActivity {
           .create();
       dialog.show();
     });
-    viewModel.getSearch(.observe(this, (quote) -> {
-      ArrayAdapter adapter = new ArrayAdapter()
-    });
+
+//    Button newSearchButton = findViewById(R.id.button);
+//    final EditText newSearchQuote = findViewById(R.id.edit_text);
+//    newSearchButton.setOnClickListener(new OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//      }
+//    });
+      //FIXME Do this right......
   }
 
   private void setupFab() {
