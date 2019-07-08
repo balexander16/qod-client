@@ -3,6 +3,7 @@ package edu.cnm.deepdive.qodclient.controller;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import edu.cnm.deepdive.qodclient.R;
 import edu.cnm.deepdive.qodclient.model.Quote;
 import edu.cnm.deepdive.qodclient.viewmodel.MainViewModel;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
           .setPositiveButton("Cool!", (dialogInterface, i) -> {})
           .create();
       dialog.show();
+    });
+    viewModel.getSearch(.observe(this, (quote) -> {
+      ArrayAdapter adapter = new ArrayAdapter()
     });
   }
 
@@ -76,4 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     return super.onOptionsItemSelected(item);
   }
+
+
 }
