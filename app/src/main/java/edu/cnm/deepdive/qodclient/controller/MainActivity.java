@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
   private MainViewModel viewModel;
   private LiveData<Quote> random;
+  private ListView searchResults;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,20 @@ public class MainActivity extends AppCompatActivity {
     setupToolbar();
     setupFab();
     setupViewModel();
+
+
+    Button newSearchButton = findViewById(R.id.button);
+    EditText newSearchQuote = findViewById(R.id.edit_text);
+    searchResults = findViewById(R.id.list_view);
+
+    searchResults.setOnItemClickListener(v ->
+        viewModel.(newSearchButton.getText().toString().trim()));
   }
 
   private void setupViewModel() {
     View rootView = findViewById(R.id.root_view);
     viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+    getLifecycle().addObserver(viewModel);
     viewModel.getRandomQuote().observe(this, (quote) -> {
       AlertDialog dialog = new AlertDialog.Builder(this)
           .setTitle("Random Quote") //TODO extract to resource.
@@ -48,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
       dialog.show();
     });
 
-//    Button newSearchButton = findViewById(R.id.button);
-//    final EditText newSearchQuote = findViewById(R.id.edit_text);
-//    newSearchButton.setOnClickListener(new OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//      }
-//    });
-      //FIXME Do this right......
+
+    viewModel.getSearch(null).observe(this, (quotes) -> {
+      ArrayAdapter<Quote> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,quotes);
+      searchResults.setAdapter(adapter);
+    });
+
+
+
   }
 
   private void setupFab() {
